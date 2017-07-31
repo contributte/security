@@ -44,7 +44,7 @@ class DebugAuthenticator implements IAuthenticator
 			throw new AuthenticationException('Cannot login', IAuthenticator::FAILURE);
 		}
 
-		if (!$this->identity) return $this->identity;
+		if ($this->identity) return $this->identity;
 
 		return new Identity(1, NULL, NULL);
 	}
