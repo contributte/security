@@ -15,7 +15,9 @@ use Tester\Assert;
 // Success
 test(function () {
 	$auth = new StaticAuthenticator([
-		'foo@bar.baz' => Passwords::hash('foobar'),
+		'foo@bar.baz' => [
+			'password' => Passwords::hash('foobar'),
+		],
 	]);
 
 	Assert::type(IIdentity::class, $auth->authenticate(['foo@bar.baz', 'foobar']));
@@ -24,7 +26,9 @@ test(function () {
 // User not found
 test(function () {
 	$auth = new StaticAuthenticator([
-		'foo@bar.baz' => Passwords::hash('foobar'),
+		'foo@bar.baz' => [
+			'password' => Passwords::hash('foobar'),
+		],
 	]);
 
 	Assert::exception(function () use ($auth) {
@@ -35,7 +39,9 @@ test(function () {
 // Invalid password
 test(function () {
 	$auth = new StaticAuthenticator([
-		'foo@bar.baz' => Passwords::hash('foobar'),
+		'foo@bar.baz' => [
+			'password' => Passwords::hash('foobar'),
+		],
 	]);
 
 	Assert::exception(function () use ($auth) {

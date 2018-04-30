@@ -28,6 +28,13 @@ services:
 ```yaml
 services:
     security.authenticator: Contributte\Security\Auth\StaticAuthenticator([
-        "john@doe.net" => "$2y$10$WRJHd2kC77n46.sb5sgliuYeXbnQ0qK9WWRK8u0sy6lTHk5hNu/y2"]
+        "john@doe.net" => [
+            password: $2y$10$fn.Y.EyNIaQwp1laEQskUOywXDbahvZ9xjWVaEQ4u2rDFj87F/YKO,
+            identity: Nette\Security\Identity(
+                "john@doe.net",
+                ["user", "roles"],
+                ["custom", "data"]
+            )
+        ]
     )
 ```
