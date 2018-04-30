@@ -12,7 +12,7 @@ use Nette\Security\IIdentity;
 use Nette\Security\Passwords;
 use Tester\Assert;
 
-// Success
+// Success - hashed password
 test(function (): void {
 	$auth = new StaticAuthenticator([
 		'foo@bar.baz' => [
@@ -21,6 +21,29 @@ test(function (): void {
 	]);
 
 	Assert::type(IIdentity::class, $auth->authenticate(['foo@bar.baz', 'foobar']));
+});
+
+// Success - plain password
+test(function (): void {
+	$auth = new StaticAuthenticator([
+		'foo@bar.baz' => [
+			'password' => 'foobar',
+			'unsecured' => true
+		],
+	]);
+
+	Assert::type(IIdentity::class, $auth->authenticate(['foo@bar.baz', 'foobar']));
+});
+
+// Deprecated syntax
+test(function (): void {
+	$auth = new StaticAuthenticator([
+		'foo@bar.baz' => Passwords::hash('foobar'),
+	]);
+
+	Assert::error(function () use ($auth): void {
+		$auth->authenticate(['foo', 'bar']);
+	}, E_USER_DEPRECATED, 'Usage of `$username => $password` is deprecated, use `$username => ["password" => $password]` instead');
 });
 
 // User not found

@@ -12,16 +12,8 @@ class SecurityExtension extends CompilerExtension
 
 	/** @var mixed[] */
 	private $defaults = [
-		'debugger' => true,
+		'debug' => false,
 	];
-
-	/** @var bool */
-	private $debugMode;
-
-	public function __construct(bool $debugMode)
-	{
-		$this->debugMode = $debugMode;
-	}
 
 	/**
 	 * Register services
@@ -39,7 +31,7 @@ class SecurityExtension extends CompilerExtension
 			$builder->addAlias('security.user', $this->prefix('user'));
 		}
 
-		if ($this->debugMode && $config['debugger']) {
+		if ($config['debug'] === true) {
 			$user->addSetup('@Tracy\Bar::addPanel', [
 				new Statement(UserPanel::class),
 			]);

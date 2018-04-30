@@ -32,7 +32,7 @@ class DebugAuthenticator implements IAuthenticator
 	 */
 	public function authenticate(array $credentials): IIdentity
 	{
-		if (!$this->pass) {
+		if ($this->pass === false) {
 			throw new AuthenticationException('Cannot login', IAuthenticator::FAILURE);
 		}
 

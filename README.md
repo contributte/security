@@ -26,12 +26,13 @@ composer require contributte/security
 
 | State       | Version | Branch   | PHP      |
 |-------------|---------|----------|----------|
-| stable      | `^0.1`  | `master` | `>= 5.6` |
 | stable      | `^0.2`  | `master` | `>= 7.1` |
+| stable      | `^0.1`  | `master` | `>= 5.6` |
 
 ## Overview
 
 - [Usage - how to register](https://github.com/contributte/security/blob/master/.docs/README.md#usage)
+- [Configuration - how to configure](https://github.com/contributte/security/blob/master/.docs/README.md#configuration)
 - [Authentication - list of authenticators](https://github.com/contributte/security/blob/master/.docs/README.md#authentication)
 
 ## Maintainers

@@ -18,7 +18,7 @@ class StaticAuthenticator implements IAuthenticator
 	private $list;
 
 	/**
-	 * @param mixed[][] $list
+	 * @param mixed[] $list
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct(array $list)
@@ -29,6 +29,7 @@ class StaticAuthenticator implements IAuthenticator
 			if (is_string($values)) {
 				$this->list[$username] = [
 					'password' => $values,
+					'unsecured' => false,
 					'identity' => new Identity($username, null, ['username' => $username]),
 				];
 				trigger_error('Usage of `$username => $password` is deprecated, use `$username => ["password" => $password]` instead', E_USER_DEPRECATED);
@@ -41,6 +42,7 @@ class StaticAuthenticator implements IAuthenticator
 
 			$this->list[$username] = [
 				'password' => $values['password'],
+				'unsecured' => $values['unsecured'] ?? false,
 				'identity' => $this->createIdentity($username, $values),
 			];
 
@@ -59,11 +61,15 @@ class StaticAuthenticator implements IAuthenticator
 			throw new AuthenticationException(sprintf('User `%s` not found', $username), IAuthenticator::IDENTITY_NOT_FOUND);
 		}
 
-		if (!Passwords::verify($password, $this->list[$username]['password'])) {
+		$user = $this->list[$username];
+		if (
+			($user['unsecured'] === true && !hash_equals($password, $user['password'])) ||
+			($user['unsecured'] === false && !Passwords::verify($password, $user['password']))
+		) {
 			throw new AuthenticationException('Invalid password', IAuthenticator::INVALID_CREDENTIAL);
 		}
 
-		return $this->list[$username]['identity'];
+		return $user['identity'];
 	}
 
 	/**
