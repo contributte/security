@@ -28,7 +28,7 @@ test(function (): void {
 	$auth = new StaticAuthenticator([
 		'foo@bar.baz' => [
 			'password' => 'foobar',
-			'unsecured' => true
+			'unsecured' => true,
 		],
 	]);
 
@@ -37,12 +37,12 @@ test(function (): void {
 
 // Deprecated syntax
 test(function (): void {
-	$auth = new StaticAuthenticator([
-		'foo@bar.baz' => Passwords::hash('foobar'),
-	]);
+	Assert::error(function (): void {
+		$auth = new StaticAuthenticator([
+			'foo@bar.baz' => Passwords::hash('foobar'),
+		]);
 
-	Assert::error(function () use ($auth): void {
-		$auth->authenticate(['foo', 'bar']);
+		$auth->authenticate(['foo@bar.baz', 'foobar']);
 	}, E_USER_DEPRECATED, 'Usage of `$username => $password` is deprecated, use `$username => ["password" => $password]` instead');
 });
 
