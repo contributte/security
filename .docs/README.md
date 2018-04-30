@@ -38,3 +38,9 @@ services:
         ]
     )
 ```
+
+**Hint**
+
+Don't know syntax for StaticAuthenticator identity?
+
+`Nette\Security\Identity('id', ['role'], ['data'])` in neon is equivalent for `new Nette\Security\Identity(string $id, array $roles, array $data)` in php.
