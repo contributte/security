@@ -33,7 +33,7 @@ test(function (): void {
 
 	Assert::exception(function () use ($auth) {
 		$auth->authenticate(['foo', 'bar']);
-	}, AuthenticationException::class, 'User "foo" not found');
+	}, AuthenticationException::class, 'User `foo` not found');
 });
 
 // Invalid password
