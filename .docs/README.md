@@ -11,7 +11,7 @@ As each extra functionality you should register this SecurityExtension.
 
 ```yaml
 extensions:
-    secured: Contributte\Security\DI\SecurityExtension
+    secured: Contributte\Security\DI\SecurityExtension(%debugMode%)
 ```
 
 ## Authentication
