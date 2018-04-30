@@ -16,26 +16,18 @@ class DebugAuthenticator implements IAuthenticator
 	/** @var IIdentity */
 	private $identity;
 
-	/**
-	 * @param bool $pass
-	 */
 	public function __construct(bool $pass = true)
 	{
 		$this->pass = $pass;
 	}
 
-	/**
-	 * @param IIdentity $identity
-	 * @return void
-	 */
 	public function setIdentity(IIdentity $identity): void
 	{
 		$this->identity = $identity;
 	}
 
 	/**
-	 * @param array $credentials
-	 * @return IIdentity
+	 * @param string[] $credentials
 	 * @throws AuthenticationException
 	 */
 	public function authenticate(array $credentials): IIdentity

@@ -49,8 +49,7 @@ class StaticAuthenticator implements IAuthenticator
 	}
 
 	/**
-	 * @param array $credentials
-	 * @return IIdentity
+	 * @param string[] $credentials
 	 * @throws AuthenticationException
 	 */
 	public function authenticate(array $credentials): IIdentity
@@ -68,6 +67,9 @@ class StaticAuthenticator implements IAuthenticator
 		return $this->list[$username]['identity'];
 	}
 
+	/**
+	 * @param mixed[] $values
+	 */
 	private function createIdentity(string $username, array $values): IIdentity
 	{
 		if (!isset($values['identity'])) {

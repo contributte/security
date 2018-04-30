@@ -7,12 +7,8 @@ use Nette\Bridges\SecurityTracy\UserPanel;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Statement;
 
-/**
- * @author Milan Felix Sulc <sulcmil@gmail.com>
- */
 class SecurityExtension extends CompilerExtension
 {
-
 
 	private $defaults = [
 		'debugger' => true,
