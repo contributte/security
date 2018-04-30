@@ -31,7 +31,7 @@ test(function (): void {
 		],
 	]);
 
-	Assert::exception(function () use ($auth) {
+	Assert::exception(function () use ($auth): void {
 		$auth->authenticate(['foo', 'bar']);
 	}, AuthenticationException::class, 'User `foo` not found');
 });
@@ -44,7 +44,7 @@ test(function (): void {
 		],
 	]);
 
-	Assert::exception(function () use ($auth) {
+	Assert::exception(function () use ($auth): void {
 		$auth->authenticate(['foo@bar.baz', 'bar']);
 	}, AuthenticationException::class, 'Invalid password');
 });

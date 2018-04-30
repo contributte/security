@@ -18,7 +18,7 @@ require_once __DIR__ . '/../../bootstrap.php';
 
 test(function (): void {
 	$loader = new ContainerLoader(TEMP_DIR, true);
-	$class = $loader->load(function (Compiler $compiler) {
+	$class = $loader->load(function (Compiler $compiler): void {
 		$compiler->addExtension('security', new NSecurityExtension());
 		$compiler->addExtension('http', new HttpExtension());
 		$compiler->addExtension('session', new SessionExtension());

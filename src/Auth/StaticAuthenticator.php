@@ -14,11 +14,11 @@ use function is_string;
 class StaticAuthenticator implements IAuthenticator
 {
 
-	/** @var array[] */
+	/** @var mixed[][] */
 	private $list;
 
 	/**
-	 * @param array[] $list
+	 * @param mixed[][] $list
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct(array $list)
@@ -45,7 +45,6 @@ class StaticAuthenticator implements IAuthenticator
 			];
 
 		}
-
 	}
 
 	/**
@@ -91,7 +90,11 @@ class StaticAuthenticator implements IAuthenticator
 		}
 
 		throw new InvalidArgumentException(sprintf(
-			'Identity of user `%s` must be `%s`, `%s` or `%s`.', $username, IIdentity::class, 'array', 'null'
+			'Identity of user `%s` must be `%s`, `%s` or `%s`.',
+			$username,
+			IIdentity::class,
+			'array',
+			'null'
 		));
 	}
 

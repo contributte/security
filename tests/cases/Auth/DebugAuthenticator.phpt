@@ -19,7 +19,7 @@ test(function (): void {
 
 // Pessimistic
 test(function (): void {
-	Assert::exception(function () {
+	Assert::exception(function (): void {
 		$auth = new DebugAuthenticator(false);
 		$auth->authenticate([]);
 	}, AuthenticationException::class);

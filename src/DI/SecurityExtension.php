@@ -10,6 +10,7 @@ use Nette\DI\Statement;
 class SecurityExtension extends CompilerExtension
 {
 
+	/** @var mixed[] */
 	private $defaults = [
 		'debugger' => true,
 	];
@@ -24,8 +25,6 @@ class SecurityExtension extends CompilerExtension
 
 	/**
 	 * Register services
-	 *
-	 * @return void
 	 */
 	public function loadConfiguration(): void
 	{
