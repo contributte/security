@@ -8,6 +8,7 @@ use Nette\Security\IAuthenticator;
 use Nette\Security\Identity;
 use Nette\Security\IIdentity;
 use Nette\Security\Passwords;
+use function is_array;
 use function is_string;
 
 class StaticAuthenticator implements IAuthenticator
@@ -30,7 +31,7 @@ class StaticAuthenticator implements IAuthenticator
 					'password' => $values,
 					'identity' => new Identity($username, null, ['username' => $username]),
 				];
-				trigger_error('Usage of `$username => $password` is deprecated, use `$usernaname => ["password" => $password]` instead', E_USER_DEPRECATED);
+				trigger_error('Usage of `$username => $password` is deprecated, use `$username => ["password" => $password]` instead', E_USER_DEPRECATED);
 				continue;
 			}
 
@@ -40,7 +41,7 @@ class StaticAuthenticator implements IAuthenticator
 
 			$this->list[$username] = [
 				'password' => $values['password'],
-				'identity' => $values['identity'] ?? null,
+				'identity' => $this->createIdentity($username, $values),
 			];
 
 		}
@@ -64,10 +65,32 @@ class StaticAuthenticator implements IAuthenticator
 			throw new AuthenticationException('Invalid password', IAuthenticator::INVALID_CREDENTIAL);
 		}
 
-		/** @var IIdentity|null $identity */
-		$identity = $this->list[$username]['identity'];
+		return $this->list[$username]['identity'];
+	}
 
-		return $identity ?? new Identity($username);
+	private function createIdentity(string $username, array $values): IIdentity
+	{
+		if (!isset($values['identity'])) {
+			return new Identity($username);
+		}
+
+		$identity = $values['identity'];
+
+		if ($identity instanceof IIdentity) {
+			return $identity;
+		}
+
+		if (is_array($values['identity'])) {
+			return new Identity(
+				$identity['id'] ?? $username,
+				$identity['roles'] ?? null,
+				$identity['date'] ?? null
+			);
+		}
+
+		throw new InvalidArgumentException(sprintf(
+			'Identity of user `%s` must be `%s`, `%s` or `%s`.', $username, IIdentity::class, 'array', 'null'
+		));
 	}
 
 }

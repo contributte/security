@@ -30,17 +30,21 @@ services:
     security.authenticator: Contributte\Security\Auth\StaticAuthenticator([
         "john@doe.net" => [
             password: $2y$10$fn.Y.EyNIaQwp1laEQskUOywXDbahvZ9xjWVaEQ4u2rDFj87F/YKO,
-            identity: Nette\Security\Identity(
-                "john@doe.net",
-                ["user", "roles"],
-                ["custom", "data"]
-            )
+            identity: [
+                id: "john@doe.net",
+                roles: ["user", "roles"],
+                data: ["custom", "data"]
+            ]
         ]
     )
 ```
 
-**Hint**
+You can also use alternative syntax for identity with neon entity
 
-Don't know syntax for StaticAuthenticator identity?
-
-`Nette\Security\Identity('id', ['role'], ['data'])` in neon is equivalent for `new Nette\Security\Identity(string $id, array $roles, array $data)` in php.
+```yaml
+identity: Nette\Security\Identity(
+    "john@doe.net",
+    ["user", "roles"],
+    ["custom", "data"]
+)
+```
