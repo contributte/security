@@ -28,6 +28,7 @@ class StaticAuthenticator implements IAuthenticator
 			if (is_string($values)) {
 				$this->list[$username] = [
 					'password' => $values,
+					'identity' => new Identity($username, null, ['username' => $username]),
 				];
 				trigger_error('Usage of `$username => $password` is deprecated, use `$usernaname => ["password" => $password]` instead', E_USER_DEPRECATED);
 				continue;
@@ -63,15 +64,10 @@ class StaticAuthenticator implements IAuthenticator
 			throw new AuthenticationException('Invalid password', IAuthenticator::INVALID_CREDENTIAL);
 		}
 
-		/** @var IIdentity $identity */
+		/** @var IIdentity|null $identity */
 		$identity = $this->list[$username]['identity'];
 
-		// backward compatibility
-		if ($identity === null) {
-			return new Identity($username, null, ['username' => $username]);
-		}
-
-		return $this->list[$username]['identity'];
+		return $identity ?? new Identity($username);
 	}
 
 }
