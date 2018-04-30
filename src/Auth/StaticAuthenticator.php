@@ -39,7 +39,7 @@ class StaticAuthenticator implements IAuthenticator
 
 			$this->list[$username] = [
 				'password' => $values['password'],
-				'identity' => $values['identity'] ?? null,
+				'identity' => isset($values['identity']) ? $values['identity'] : null,
 			];
 
 		}
