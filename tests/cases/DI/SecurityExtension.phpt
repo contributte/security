@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /**
  * Test: DI\SecurityExtension
@@ -16,8 +16,8 @@ use Tester\Assert;
 
 require_once __DIR__ . '/../../bootstrap.php';
 
-test(function () {
-	$loader = new ContainerLoader(TEMP_DIR, TRUE);
+test(function (): void {
+	$loader = new ContainerLoader(TEMP_DIR, true);
 	$class = $loader->load(function (Compiler $compiler) {
 		$compiler->addExtension('security', new NSecurityExtension());
 		$compiler->addExtension('http', new HttpExtension());
@@ -26,7 +26,7 @@ test(function () {
 	}, 1);
 
 	/** @var Container $container */
-	$container = new $class;
+	$container = new $class();
 
 	Assert::same($container->getByType(User::class), $container->getService('security.user'));
 	Assert::true($container->hasService('secured.user'));

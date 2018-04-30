@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /**
  * Test: Auth\StaticAuthenticator
@@ -13,7 +13,7 @@ use Nette\Security\Passwords;
 use Tester\Assert;
 
 // Success
-test(function () {
+test(function (): void {
 	$auth = new StaticAuthenticator([
 		'foo@bar.baz' => [
 			'password' => Passwords::hash('foobar'),
@@ -24,7 +24,7 @@ test(function () {
 });
 
 // User not found
-test(function () {
+test(function (): void {
 	$auth = new StaticAuthenticator([
 		'foo@bar.baz' => [
 			'password' => Passwords::hash('foobar'),
@@ -37,7 +37,7 @@ test(function () {
 });
 
 // Invalid password
-test(function () {
+test(function (): void {
 	$auth = new StaticAuthenticator([
 		'foo@bar.baz' => [
 			'password' => Passwords::hash('foobar'),

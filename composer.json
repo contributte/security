@@ -12,12 +12,12 @@
     }
   ],
   "require": {
-    "php": ">= 5.6",
+    "php": ">= 7.1",
     "nette/security": "^2.4.2"
   },
   "require-dev": {
-    "ninjify/qa": "^0.4.0",
-    "ninjify/nunjuck": "^0.1.4",
+    "ninjify/qa": "^0.8.0",
+    "ninjify/nunjuck": "^0.2.0",
     "nette/di": "^2.4.9",
     "nette/http": "^2.4.6"
   },
@@ -37,7 +37,7 @@
     "tester": [
       "tester -s -p php --colors 1 -c tests/php-unix.ini tests/cases"
     ],
-    "tester-coverage": [
+    "coverage": [
       "tester -s -p php --colors 1 -c tests/php-unix.ini -d extension=xdebug.so --coverage ./coverage.xml --coverage-src ./src tests/cases"
     ]
   }

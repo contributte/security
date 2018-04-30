@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Contributte\Security\Auth;
 
@@ -39,7 +39,7 @@ class StaticAuthenticator implements IAuthenticator
 
 			$this->list[$username] = [
 				'password' => $values['password'],
-				'identity' => isset($values['identity']) ? $values['identity'] : null,
+				'identity' => $values['identity'] ?? null,
 			];
 
 		}
@@ -51,7 +51,7 @@ class StaticAuthenticator implements IAuthenticator
 	 * @return IIdentity
 	 * @throws AuthenticationException
 	 */
-	public function authenticate(array $credentials)
+	public function authenticate(array $credentials): IIdentity
 	{
 		[$username, $password] = $credentials;
 
