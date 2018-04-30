@@ -22,7 +22,7 @@ test(function (): void {
 		$compiler->addExtension('security', new NSecurityExtension());
 		$compiler->addExtension('http', new HttpExtension());
 		$compiler->addExtension('session', new SessionExtension());
-		$compiler->addExtension('secured', new SecurityExtension());
+		$compiler->addExtension('secured', new SecurityExtension(false));
 	}, 1);
 
 	/** @var Container $container */
