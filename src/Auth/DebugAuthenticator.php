@@ -13,7 +13,7 @@ class DebugAuthenticator implements IAuthenticator
 	/** @var bool */
 	private $pass;
 
-	/** @var IIdentity */
+	/** @var IIdentity|null */
 	private $identity;
 
 	public function __construct(bool $pass = true)
@@ -36,7 +36,7 @@ class DebugAuthenticator implements IAuthenticator
 			throw new AuthenticationException('Cannot login', IAuthenticator::FAILURE);
 		}
 
-		if ($this->identity) {
+		if ($this->identity !== null) {
 			return $this->identity;
 		}
 
