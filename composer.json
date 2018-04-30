@@ -29,6 +29,8 @@
       "Contributte\\Security\\": "src"
     }
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "scripts": {
     "qa": [
       "linter src tests",
