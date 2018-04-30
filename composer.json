@@ -19,7 +19,8 @@
     "ninjify/qa": "^0.8.0",
     "ninjify/nunjuck": "^0.2.0",
     "nette/di": "^2.4.11",
-    "nette/http": "^2.4.8"
+    "nette/http": "^2.4.8",
+    "nette/utils": "^2.5.1"
   },
   "suggest": {
     "nette/di": "to use SecurityExtension [CompilerExtension]"
