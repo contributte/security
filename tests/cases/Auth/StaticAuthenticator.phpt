@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 /**
  * Test: Auth\StaticAuthenticator
@@ -12,33 +12,62 @@ use Nette\Security\IIdentity;
 use Nette\Security\Passwords;
 use Tester\Assert;
 
-// Success
-test(function () {
+// Success - hashed password
+test(function (): void {
 	$auth = new StaticAuthenticator([
-		'foo@bar.baz' => Passwords::hash('foobar'),
+		'foo@bar.baz' => [
+			'password' => Passwords::hash('foobar'),
+		],
 	]);
 
 	Assert::type(IIdentity::class, $auth->authenticate(['foo@bar.baz', 'foobar']));
 });
 
-// User not found
-test(function () {
+// Success - plain password
+test(function (): void {
 	$auth = new StaticAuthenticator([
-		'foo@bar.baz' => Passwords::hash('foobar'),
+		'foo@bar.baz' => [
+			'password' => 'foobar',
+			'unsecured' => true,
+		],
 	]);
 
-	Assert::exception(function () use ($auth) {
+	Assert::type(IIdentity::class, $auth->authenticate(['foo@bar.baz', 'foobar']));
+});
+
+// Deprecated syntax
+test(function (): void {
+	Assert::error(function (): void {
+		$auth = new StaticAuthenticator([
+			'foo@bar.baz' => Passwords::hash('foobar'),
+		]);
+
+		$auth->authenticate(['foo@bar.baz', 'foobar']);
+	}, E_USER_DEPRECATED, 'Usage of `$username => $password` is deprecated, use `$username => ["password" => $password]` instead');
+});
+
+// User not found
+test(function (): void {
+	$auth = new StaticAuthenticator([
+		'foo@bar.baz' => [
+			'password' => Passwords::hash('foobar'),
+		],
+	]);
+
+	Assert::exception(function () use ($auth): void {
 		$auth->authenticate(['foo', 'bar']);
-	}, AuthenticationException::class, 'User "foo" not found');
+	}, AuthenticationException::class, 'User `foo` not found');
 });
 
 // Invalid password
-test(function () {
+test(function (): void {
 	$auth = new StaticAuthenticator([
-		'foo@bar.baz' => Passwords::hash('foobar'),
+		'foo@bar.baz' => [
+			'password' => Passwords::hash('foobar'),
+		],
 	]);
 
-	Assert::exception(function () use ($auth) {
+	Assert::exception(function () use ($auth): void {
 		$auth->authenticate(['foo@bar.baz', 'bar']);
 	}, AuthenticationException::class, 'Invalid password');
 });

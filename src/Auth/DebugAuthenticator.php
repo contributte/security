@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Contributte\Security\Auth;
 
@@ -13,40 +13,34 @@ class DebugAuthenticator implements IAuthenticator
 	/** @var bool */
 	private $pass;
 
-	/** @var IIdentity */
+	/** @var IIdentity|null */
 	private $identity;
 
-	/**
-	 * @param bool $pass
-	 */
-	public function __construct($pass = TRUE)
+	public function __construct(bool $pass = true)
 	{
-		$this->pass = boolval($pass);
+		$this->pass = $pass;
 	}
 
-	/**
-	 * @param IIdentity $identity
-	 * @return void
-	 */
-	public function setIdentity(IIdentity $identity)
+	public function setIdentity(IIdentity $identity): void
 	{
 		$this->identity = $identity;
 	}
 
 	/**
-	 * @param array $credentials
-	 * @return IIdentity
+	 * @param string[] $credentials
 	 * @throws AuthenticationException
 	 */
-	public function authenticate(array $credentials)
+	public function authenticate(array $credentials): IIdentity
 	{
-		if (!$this->pass) {
+		if ($this->pass === false) {
 			throw new AuthenticationException('Cannot login', IAuthenticator::FAILURE);
 		}
 
-		if ($this->identity) return $this->identity;
+		if ($this->identity !== null) {
+			return $this->identity;
+		}
 
-		return new Identity(1, NULL, NULL);
+		return new Identity(1, null, null);
 	}
 
 }
