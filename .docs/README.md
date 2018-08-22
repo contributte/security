@@ -8,7 +8,7 @@
 
 ## Usage
 
-As each extra functionality you should register this SecurityExtension.
+As with any other extension, you need to register it.
 
 ```yaml
 extensions:
@@ -48,7 +48,7 @@ services:
     )
 ```
 
-**Usage without hashing of passwords**
+**Usage without password hashing**
 
 ```yaml
 services:
@@ -67,7 +67,7 @@ services:
     )
 ```
 
-**Usage of own `Nette\Security\IIdentity`**
+**Usage with custom `Nette\Security\IIdentity` implementation **
 
 ```yaml
 services:
