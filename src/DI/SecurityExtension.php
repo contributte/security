@@ -24,7 +24,7 @@ class SecurityExtension extends CompilerExtension
 		$config = $this->validateConfig($this->defaults);
 
 		$user = $builder->addDefinition($this->prefix('user'))
-			->setClass(User::class);
+			->setFactory(User::class);
 
 		if ($builder->hasDefinition('security.user')) {
 			$builder->removeDefinition('security.user');
