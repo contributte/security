@@ -14,11 +14,12 @@ use Tester\Assert;
 
 // Success - hashed password
 test(function (): void {
+	$hash = (new Passwords(PASSWORD_BCRYPT))->hash('foobar');
 	$auth = new StaticAuthenticator([
 		'foo@bar.baz' => [
-			'password' => Passwords::hash('foobar'),
+			'password' => $hash,
 		],
-	]);
+	], (new Passwords(PASSWORD_BCRYPT)));
 
 	Assert::type(IIdentity::class, $auth->authenticate(['foo@bar.baz', 'foobar']));
 });
@@ -30,7 +31,7 @@ test(function (): void {
 			'password' => 'foobar',
 			'unsecured' => true,
 		],
-	]);
+	], (new Passwords(PASSWORD_BCRYPT)));
 
 	Assert::type(IIdentity::class, $auth->authenticate(['foo@bar.baz', 'foobar']));
 });
@@ -38,9 +39,10 @@ test(function (): void {
 // Deprecated syntax
 test(function (): void {
 	Assert::error(function (): void {
+		$hash = (new Passwords(PASSWORD_BCRYPT))->hash('foobar');
 		$auth = new StaticAuthenticator([
-			'foo@bar.baz' => Passwords::hash('foobar'),
-		]);
+			'foo@bar.baz' => $hash,
+		], (new Passwords(PASSWORD_BCRYPT)));
 
 		$auth->authenticate(['foo@bar.baz', 'foobar']);
 	}, E_USER_DEPRECATED, 'Usage of `$username => $password` is deprecated, use `$username => ["password" => $password]` instead');
@@ -48,11 +50,12 @@ test(function (): void {
 
 // User not found
 test(function (): void {
+	$hash = (new Passwords(PASSWORD_BCRYPT))->hash('foobar');
 	$auth = new StaticAuthenticator([
 		'foo@bar.baz' => [
-			'password' => Passwords::hash('foobar'),
+			'password' => $hash,
 		],
-	]);
+	], (new Passwords(PASSWORD_BCRYPT)));
 
 	Assert::exception(function () use ($auth): void {
 		$auth->authenticate(['foo', 'bar']);
@@ -61,11 +64,12 @@ test(function (): void {
 
 // Invalid password
 test(function (): void {
+	$hash = (new Passwords(PASSWORD_BCRYPT))->hash('foobar');
 	$auth = new StaticAuthenticator([
 		'foo@bar.baz' => [
-			'password' => Passwords::hash('foobar'),
+			'password' => $hash,
 		],
-	]);
+	], (new Passwords(PASSWORD_BCRYPT)));
 
 	Assert::exception(function () use ($auth): void {
 		$auth->authenticate(['foo@bar.baz', 'bar']);

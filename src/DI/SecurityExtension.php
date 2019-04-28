@@ -21,7 +21,7 @@ class SecurityExtension extends CompilerExtension
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
-		$config = $this->validateConfig($this->defaults);
+		$config = $this->defaults;
 
 		$user = $builder->addDefinition($this->prefix('user'))
 			->setFactory(User::class);
