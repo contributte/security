@@ -1,14 +1,16 @@
-# Security
+# Contributte Security
 
 ## Content
 
-- [Usage - how to register](#usage)
-- [Configuration - how to configure](#configuration)
-- [Authentication - list of authenticators](#authentication)
+- [Setup](#setup)
+- [Configuration](#configuration)
+- [Authenticators](#authenticators)
 
-## Usage
+## Setup
 
-As with any other extension, you need to register it.
+```bash
+composer require contributte/security
+```
 
 ```yaml
 extensions:
@@ -22,7 +24,7 @@ secured:
     debug: %debugMode%
 ```
 
-## Authentication
+## Authenticators
 
 ### DebugAuthenticator
 
