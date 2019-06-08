@@ -3,25 +3,12 @@
 ## Content
 
 - [Setup](#setup)
-- [Configuration](#configuration)
 - [Authenticators](#authenticators)
 
 ## Setup
 
 ```bash
 composer require contributte/security
-```
-
-```yaml
-extensions:
-    secured: Contributte\Security\DI\SecurityExtension
-```
-
-## Configuration
-
-```yaml
-secured:
-    debug: %debugMode%
 ```
 
 ## Authenticators

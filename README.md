@@ -17,7 +17,6 @@ Extra contribution to [`nette/security`](https://github.com/nette/security).
 ## Documentation
 
 - [Setup](.docs/README.md#setup)
-- [Configuration](.docs/README.md#configuration)
 - [Authenticators](.docs/README.md#authenticators)
 
 ## Versions
