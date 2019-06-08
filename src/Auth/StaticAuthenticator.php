@@ -17,14 +17,16 @@ class StaticAuthenticator implements IAuthenticator
 	/** @var mixed[][] */
 	private $list;
 
+	/** @var Passwords */
+	private $passwords;
+
 	/**
 	 * @param mixed[] $list
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct(array $list)
+	public function __construct(array $list, Passwords $passwords)
 	{
 		foreach ($list as $username => $values) {
-
 			// backward compatibility
 			if (is_string($values)) {
 				$this->list[$username] = [
@@ -45,8 +47,9 @@ class StaticAuthenticator implements IAuthenticator
 				'unsecured' => $values['unsecured'] ?? false,
 				'identity' => $this->createIdentity($username, $values),
 			];
-
 		}
+
+		$this->passwords = $passwords;
 	}
 
 	/**
@@ -62,9 +65,10 @@ class StaticAuthenticator implements IAuthenticator
 		}
 
 		$user = $this->list[$username];
+
 		if (
 			($user['unsecured'] === true && !hash_equals($password, $user['password'])) ||
-			($user['unsecured'] === false && !Passwords::verify($password, $user['password']))
+			($user['unsecured'] === false && !$this->passwords->verify($password, $user['password']))
 		) {
 			throw new AuthenticationException('Invalid password', IAuthenticator::INVALID_CREDENTIAL);
 		}

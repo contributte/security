@@ -5,23 +5,28 @@ namespace Contributte\Security\DI;
 use Contributte\Security\User;
 use Nette\Bridges\SecurityTracy\UserPanel;
 use Nette\DI\CompilerExtension;
-use Nette\DI\Statement;
+use Nette\DI\Definitions\Statement;
+use Nette\Schema\Expect;
+use Nette\Schema\Schema;
+use stdClass;
 
+/**
+ * @property-read stdClass $config
+ */
 class SecurityExtension extends CompilerExtension
 {
 
-	/** @var mixed[] */
-	private $defaults = [
-		'debug' => false,
-	];
+	public function getConfigSchema(): Schema
+	{
+		return Expect::structure([
+			'debug' => Expect::bool(false),
+		]);
+	}
 
-	/**
-	 * Register services
-	 */
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
-		$config = $this->validateConfig($this->defaults);
+		$config = $this->config;
 
 		$user = $builder->addDefinition($this->prefix('user'))
 			->setFactory(User::class);
@@ -31,7 +36,7 @@ class SecurityExtension extends CompilerExtension
 			$builder->addAlias('security.user', $this->prefix('user'));
 		}
 
-		if ($config['debug'] === true) {
+		if ($config->debug === true) {
 			$user->addSetup('@Tracy\Bar::addPanel', [
 				new Statement(UserPanel::class),
 			]);
