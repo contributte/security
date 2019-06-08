@@ -12,13 +12,12 @@
     }
   ],
   "require": {
-    "php": ">= 7.1",
-    "nette/security": "~2.4.3"
+    "php": "^7.2",
+    "nette/security": "~3.0.0"
   },
   "require-dev": {
-    "nette/di": "^2.4.11",
-    "nette/http": "^2.4.8",
-    "nette/utils": "^2.5.1",
+    "nette/di": "~3.0.0",
+    "nette/http": "~3.0.1",
     "ninjify/nunjuck": "^0.2.0",
     "ninjify/qa": "^0.8.0",
     "phpstan/extension-installer": "^1.0",
@@ -26,7 +25,10 @@
     "phpstan/phpstan-nette": "^0.11",
     "phpstan/phpstan-shim": "^0.11",
     "phpstan/phpstan-strict-rules": "^0.11",
-    "tracy/tracy": "^2.4.9"
+    "tracy/tracy": "~2.6.2"
+  },
+  "conflict": {
+    "nette/di": "<3.0.0"
   },
   "suggest": {
     "nette/di": "to use SecurityExtension [CompilerExtension]"
@@ -43,7 +45,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "0.3-dev"
+      "dev-master": "0.4-dev"
     }
   }
 }
