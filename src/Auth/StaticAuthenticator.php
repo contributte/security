@@ -8,8 +8,6 @@ use Nette\Security\IAuthenticator;
 use Nette\Security\Identity;
 use Nette\Security\IIdentity;
 use Nette\Security\Passwords;
-use function is_array;
-use function is_string;
 
 class StaticAuthenticator implements IAuthenticator
 {
@@ -27,17 +25,6 @@ class StaticAuthenticator implements IAuthenticator
 	public function __construct(array $list, Passwords $passwords)
 	{
 		foreach ($list as $username => $values) {
-			// backward compatibility
-			if (is_string($values)) {
-				$this->list[$username] = [
-					'password' => $values,
-					'unsecured' => false,
-					'identity' => new Identity($username, null, ['username' => $username]),
-				];
-				trigger_error('Usage of `$username => $password` is deprecated, use `$username => ["password" => $password]` instead', E_USER_DEPRECATED);
-				continue;
-			}
-
 			if (!isset($values['password'])) {
 				throw new InvalidArgumentException(sprintf('Missing parameter `password` for user `%s`', $username));
 			}

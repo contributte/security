@@ -36,18 +36,6 @@ test(function (): void {
 	Assert::type(IIdentity::class, $auth->authenticate(['foo@bar.baz', 'foobar']));
 });
 
-// Deprecated syntax
-test(function (): void {
-	Assert::error(function (): void {
-		$hash = (new Passwords(PASSWORD_BCRYPT))->hash('foobar');
-		$auth = new StaticAuthenticator([
-			'foo@bar.baz' => $hash,
-		], (new Passwords(PASSWORD_BCRYPT)));
-
-		$auth->authenticate(['foo@bar.baz', 'foobar']);
-	}, E_USER_DEPRECATED, 'Usage of `$username => $password` is deprecated, use `$username => ["password" => $password]` instead');
-});
-
 // User not found
 test(function (): void {
 	$hash = (new Passwords(PASSWORD_BCRYPT))->hash('foobar');
