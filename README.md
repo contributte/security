@@ -18,10 +18,6 @@
 Website 🚀 <a href="https://contributte.org">contributte.org</a> | Contact 👨🏻‍💻 <a href="https://f3l1x.io">f3l1x.io</a> | Twitter 🐦 <a href="https://twitter.com/contributte">@contributte</a>
 </p>
 
-<p align=center>
-  <img src="https://raw.githubusercontent.com/contributte/security/master/.docs/assets/cycle.png">
-</p>
-
 ## Usage
 
 To install latest version of `contributte/security` use [Composer](https://getcomposer.com).
