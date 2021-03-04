@@ -22,8 +22,8 @@ Website ðŸš€ <a href="https://contributte.org">contributte.org</a> | Contact ðŸ‘
 
 To install latest version of `contributte/security` use [Composer](https://getcomposer.org).
 
-```
-$ composer require contributte/security
+```bash
+composer require contributte/security
 ```
 
 ## Documentation
