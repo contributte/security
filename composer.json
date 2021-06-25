@@ -1,7 +1,14 @@
 {
   "name": "contributte/security",
   "description": "Extra contrib to nette/security",
-  "keywords": ["nette", "security", "authentication", "authorization", "acl", "privilege"],
+  "keywords": [
+    "nette",
+    "security",
+    "authentication",
+    "authorization",
+    "acl",
+    "privilege"
+  ],
   "type": "library",
   "license": "MIT",
   "homepage": "https://github.com/contributte/security",
