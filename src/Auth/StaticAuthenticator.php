@@ -4,12 +4,12 @@ namespace Contributte\Security\Auth;
 
 use InvalidArgumentException;
 use Nette\Security\AuthenticationException;
-use Nette\Security\IAuthenticator;
-use Nette\Security\Identity;
+use Nette\Security\Authenticator;
 use Nette\Security\IIdentity;
 use Nette\Security\Passwords;
+use Nette\Security\SimpleIdentity;
 
-class StaticAuthenticator implements IAuthenticator
+class StaticAuthenticator implements Authenticator
 {
 
 	/** @var mixed[][] */
@@ -40,15 +40,12 @@ class StaticAuthenticator implements IAuthenticator
 	}
 
 	/**
-	 * @param string[] $credentials
 	 * @throws AuthenticationException
 	 */
-	public function authenticate(array $credentials): IIdentity
+	public function authenticate(string $username, string $password): IIdentity
 	{
-		[$username, $password] = $credentials;
-
 		if (!isset($this->list[$username])) {
-			throw new AuthenticationException(sprintf('User `%s` not found', $username), IAuthenticator::IDENTITY_NOT_FOUND);
+			throw new AuthenticationException(sprintf('User `%s` not found', $username), Authenticator::IDENTITY_NOT_FOUND);
 		}
 
 		$user = $this->list[$username];
@@ -57,7 +54,7 @@ class StaticAuthenticator implements IAuthenticator
 			($user['unsecured'] === true && !hash_equals($password, $user['password'])) ||
 			($user['unsecured'] === false && !$this->passwords->verify($password, $user['password']))
 		) {
-			throw new AuthenticationException('Invalid password', IAuthenticator::INVALID_CREDENTIAL);
+			throw new AuthenticationException('Invalid password', Authenticator::INVALID_CREDENTIAL);
 		}
 
 		return $user['identity'];
@@ -69,7 +66,7 @@ class StaticAuthenticator implements IAuthenticator
 	private function createIdentity(string $username, array $values): IIdentity
 	{
 		if (!isset($values['identity'])) {
-			return new Identity($username);
+			return new SimpleIdentity($username);
 		}
 
 		$identity = $values['identity'];
@@ -79,7 +76,7 @@ class StaticAuthenticator implements IAuthenticator
 		}
 
 		if (is_array($values['identity'])) {
-			return new Identity(
+			return new SimpleIdentity(
 				$identity['id'] ?? $username,
 				$identity['roles'] ?? null,
 				$identity['date'] ?? null

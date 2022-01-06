@@ -21,7 +21,7 @@ test(function (): void {
 		],
 	], (new Passwords(PASSWORD_BCRYPT)));
 
-	Assert::type(IIdentity::class, $auth->authenticate(['foo@bar.baz', 'foobar']));
+	Assert::type(IIdentity::class, $auth->authenticate('foo@bar.baz', 'foobar'));
 });
 
 // Success - plain password
@@ -33,7 +33,7 @@ test(function (): void {
 		],
 	], (new Passwords(PASSWORD_BCRYPT)));
 
-	Assert::type(IIdentity::class, $auth->authenticate(['foo@bar.baz', 'foobar']));
+	Assert::type(IIdentity::class, $auth->authenticate('foo@bar.baz', 'foobar'));
 });
 
 // User not found
@@ -46,7 +46,7 @@ test(function (): void {
 	], (new Passwords(PASSWORD_BCRYPT)));
 
 	Assert::exception(function () use ($auth): void {
-		$auth->authenticate(['foo', 'bar']);
+		$auth->authenticate('foo', 'bar');
 	}, AuthenticationException::class, 'User `foo` not found');
 });
 
@@ -60,6 +60,6 @@ test(function (): void {
 	], (new Passwords(PASSWORD_BCRYPT)));
 
 	Assert::exception(function () use ($auth): void {
-		$auth->authenticate(['foo@bar.baz', 'bar']);
+		$auth->authenticate('foo@bar.baz', 'bar');
 	}, AuthenticationException::class, 'Invalid password');
 });
