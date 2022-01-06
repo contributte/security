@@ -14,13 +14,13 @@ use Tester\Assert;
 // Optimistic
 test(function (): void {
 	$auth = new DebugAuthenticator(true);
-	Assert::type(IIdentity::class, $auth->authenticate(['foo', 'bar']));
+	Assert::type(IIdentity::class, $auth->authenticate('foo', 'bar'));
 });
 
 // Pessimistic
 test(function (): void {
 	Assert::exception(function (): void {
 		$auth = new DebugAuthenticator(false);
-		$auth->authenticate([]);
+		$auth->authenticate('', '');
 	}, AuthenticationException::class);
 });
