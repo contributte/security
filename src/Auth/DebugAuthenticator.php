@@ -10,15 +10,12 @@ use Nette\Security\SimpleIdentity;
 class DebugAuthenticator implements Authenticator
 {
 
-	/** @var bool */
-	private $pass;
+	private ?IIdentity $identity = null;
 
-	/** @var IIdentity|null */
-	private $identity;
-
-	public function __construct(bool $pass = true)
+	public function __construct(
+		private readonly bool $pass = true,
+	)
 	{
-		$this->pass = $pass;
 	}
 
 	public function setIdentity(IIdentity $identity): void
@@ -26,20 +23,17 @@ class DebugAuthenticator implements Authenticator
 		$this->identity = $identity;
 	}
 
-	/**
-	 * @throws AuthenticationException
-	 */
 	public function authenticate(string $username, string $password): IIdentity
 	{
 		if ($this->pass === false) {
-			throw new AuthenticationException('Cannot login', Authenticator::FAILURE);
+			throw new AuthenticationException('Cannot login', Authenticator::Failure);
 		}
 
 		if ($this->identity !== null) {
 			return $this->identity;
 		}
 
-		return new SimpleIdentity(1, null, null);
+		return new SimpleIdentity(1);
 	}
 
 }
