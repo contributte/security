@@ -1,5 +1,6 @@
 # IDE
 /.idea
+/.vscode
 
 # Composer
 /vendor
@@ -7,4 +8,6 @@
 
 # Tests
 /temp
+/tests/tmp
 /coverage.xml
+/coverage.html
