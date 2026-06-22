@@ -18,17 +18,7 @@
 Website 🚀 <a href="https://contributte.org">contributte.org</a> | Contact 👨🏻‍💻 <a href="https://f3l1x.io">f3l1x.io</a> | Twitter 🐦 <a href="https://twitter.com/contributte">@contributte</a>
 </p>
 
-## Usage
-
-To install latest version of `contributte/security` use [Composer](https://getcomposer.org).
-
-```bash
-composer require contributte/security
-```
-
-## Documentation
-
-For details on how to use this package, check out our [documentation](.docs).
+Security helpers and authenticators for Nette applications.
 
 ## Versions
 
@@ -37,6 +27,72 @@ For details on how to use this package, check out our [documentation](.docs).
 | dev         | `^0.5`  | `master` | 3.0+  | `>=7.2` |
 | stable      | `^0.4`  | `master` | 3.0+  | `>=7.2` |
 | stable      | `^0.2`  | `master` | 2.4   | `>=7.1` |
+
+## Installation
+
+To install latest version of `contributte/security` use [Composer](https://getcomposer.org).
+
+```bash
+composer require contributte/security
+```
+
+## Authenticators
+
+### DebugAuthenticator
+
+```neon
+services:
+	security.authenticator: Contributte\Security\Auth\DebugAuthenticator(true/false)
+```
+
+### StaticAuthenticator
+
+```neon
+services:
+	security.authenticator: Contributte\Security\Auth\StaticAuthenticator([
+		"john@doe.net":
+			# password generated through Nette\Security\Passwords::hash()
+			password: $2y$10$fn.Y.EyNIaQwp1laEQskUOywXDbahvZ9xjWVaEQ4u2rDFj87F/YKO
+			identity: [
+				id: john@doe.net
+				roles: [user, roles]
+				data: [custom, data]
+			]
+	])
+```
+
+**Usage without password hashing**
+
+```neon
+services:
+	security.authenticator: Contributte\Security\Auth\StaticAuthenticator([
+		"john@doe.net":
+			# plain password
+			password: foobar
+			# check password as plain string
+			unsecured: true
+			identity: [
+				id: john@doe.net
+				roles: [user, roles]
+				data: [custom, data]
+			]
+	])
+```
+
+**Usage with custom `Nette\Security\IIdentity` implementation**
+
+```neon
+services:
+	security.authenticator: Contributte\Security\Auth\StaticAuthenticator([
+		"john@doe.net":
+			password: $2y$10$fn.Y.EyNIaQwp1laEQskUOywXDbahvZ9xjWVaEQ4u2rDFj87F/YKO
+			identity: My\Own\Identity(
+				john@doe.net,
+				[user, roles],
+				[custom, data]
+			)
+	])
+```
 
 ## Development
 
